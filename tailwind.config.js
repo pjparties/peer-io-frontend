@@ -6,6 +6,9 @@ export const content = [
 ];
 export const theme = {
   extend: {
+    colors: {
+      'olive':"#416D19"
+    },
     backgroundImage: {
       'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
