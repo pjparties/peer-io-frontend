@@ -7,8 +7,8 @@ import Chat from "./Chat.page";
 export default function Home() {
   return (
     <div>
-    {/* <PreferencePage /> */}
-      <LandingPage />
+    <PreferencePage />
+      {/* <LandingPage /> */}
       {/* <Chat /> */}
     </div>
   );

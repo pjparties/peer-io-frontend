@@ -7,13 +7,13 @@ export const content = [
 export const theme = {
   extend: {
     colors: {
-      accent: "#416D19",
-      accentdark: "#22390d",
-      omeglebg: "#eaeaea",
+      primary: "#F5F3E8",
+      secondary: "#214842",
+      accent: "#258F67",
+      accentdark: "#EFC368",
+      omeglebg: "#9EBCA6",
       user1: "#04027d",
       user2: "#f166ae",
-      primary: "#fef08a",
-      secondary: "#e5e7eb",
     },
     backgroundImage: {
       "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

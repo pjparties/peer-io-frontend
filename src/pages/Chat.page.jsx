@@ -54,7 +54,7 @@ const Chat = () => {
           placeholder="Type your message..."
         />
         <button
-          className="ml-2 rounded-xl border bg-accent px-4 py-4 font-bold text-white hover:scale-105 hover:bg-accentdark transition duration-300 ease-in-out"
+          className="ml-2 rounded-xl border-gray-500 bg-accent px-4 py-4 font-bold text-white hover:scale-105 hover:bg-accentdark transition duration-300 ease-in-out"
           onClick={handleSendMessage}
         >
           Send

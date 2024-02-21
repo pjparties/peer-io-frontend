@@ -11,7 +11,7 @@ const Preferences = () => {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col border-4">
+    <div className="main-preferences-wrapper">
       {show === "selector" && <Selector startChatting={startChatting} />}
       {show === "chat" && <Chat />}
     </div>
