@@ -5,10 +5,10 @@ import React from "react";
 const LandingPage = () => {
   return (
     <div className="flex flex-row">
-      <div className="h-full w-3/5 border-r-8 bg-yellow-200">
+      <div className="h-full w-3/5 border-r-8 bg-primary">
         <LeftHero />
       </div>
-      <div className="flex h-full w-2/5 flex-col items-center bg-gray-200">
+      <div className="flex h-full w-2/5 flex-col items-center bg-secondary">
         <Auth />
       </div>
     </div>

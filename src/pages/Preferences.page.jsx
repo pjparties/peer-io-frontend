@@ -1,23 +1,15 @@
-import Auth from "@/components/Auth";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
-import { useState } from "react";
-import { Selector } from "@/components/Selector";
-import Chat from './(old) Chat.page.jsx'
+import LeftHero from "@/components/LeftHero.jsx";
+import Preferences from "@/components/Preferences.jsx";
 
 const PreferencePage = () => {
-  const [show, setShow] = useState('selector'); // 3 options: selector, chat
-
-  const startChatting = () => {
-    setShow('chat');
-  }
-
   return (
-    <div className="flex flex-col w-full h-screen">
-      <Navbar />
-      {show === 'selector' && <Selector startChatting={startChatting}/>}
-      {show === 'chat' && <Chat />}
-      <Footer />
+    <div className="main container flex flex-row border">
+      <div className="h-full w-3/5 border-r-8 bg-yellow-200">
+        <LeftHero />
+      </div>
+      <div className="flex h-full w-2/5 flex-col items-center bg-gray-200">
+        <Preferences />
+      </div>
     </div>
   );
 };

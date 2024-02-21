@@ -21,12 +21,12 @@ export const Selector = ( { startChatting } ) => {
 
   return (
     <div className="flex h-full flex-col items-center justify-center">
-      <div className="button-wrapper flex flex-row items-center gap-3">
+      <div className="button-wrapper flex flex-row items-center gap-4">
         {selection.map((item) => {
           return (
           <button
             id={item.type}
-            className={`rounded-xl border-2 border-black px-4 py-2 ${item.select ? "bg-green-500 " : "bg-gray-300"}`}
+            className={`rounded-xl border-2 border-gray-400 px-4 py-2 transition ease-in-out duration-200 ${item.select ? "bg-primary scale-110" : "bg-secondary"}`}
             onClick={toggleSelect}
           >
             {item.type}
@@ -35,7 +35,7 @@ export const Selector = ( { startChatting } ) => {
       </div>
 
       <div className="mt-10 flex flex-col items-center gap-3">
-        <button className="rounded-xl border bg-blue-500 px-4 py-2 text-white" onClick={startChatting}>
+        <button className="rounded-xl border bg-accent px-4 py-2 text-white font-semibold hover:bg-accentdark transition ease-in-out duration-200 " onClick={startChatting}>
           Start Chatting
         </button>
       </div>

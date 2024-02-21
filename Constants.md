@@ -1,10 +1,10 @@
 # Themes and custom settings for the app
 
 # Color Pallete
-- light-yellow: #fef08a // primary
-- light-grey: #e5e7eb // secondary
-- olive: #416D19 // accent color
-- olivedark: "#132007" // dark accent color
+- primary: #fef08a 
+- secondary: #e5e7eb
+- accent: #416D19 // olive
+- accentdark: "#132007" // dark olive
 - omeglebg: #eaeaea //
 - user1: #04027d 
 - user2: #f166ae
