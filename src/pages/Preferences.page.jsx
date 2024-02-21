@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { useState } from "react";
 import { Selector } from "@/components/Selector";
-import Chat from './Chat.page.jsx'
+import Chat from './(old) Chat.page.jsx'
 
 const PreferencePage = () => {
   const [show, setShow] = useState('selector'); // 3 options: selector, chat
