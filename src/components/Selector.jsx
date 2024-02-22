@@ -1,6 +1,7 @@
 import { useState } from "react";
+import Link from "next/link";
 
-export const Selector = ( { startChatting } ) => {
+export const Selector = () => {
   const [selection, setSelection] = useState([
     {type: 'leetcode', select: false},
     {type: 'productivity', select: false},
@@ -35,9 +36,11 @@ export const Selector = ( { startChatting } ) => {
       </div>
 
       <div className="mt-16 flex flex-col items-center">
-        <button className="rounded-xl border-1 bg-accent px-4 py-2 text-white font-semibold hover:bg-accentdark transition ease-in-out duration-500 " onClick={startChatting}>
+        <Link href='/chat'>
+        <button className="rounded-xl border-1 bg-accent px-4 py-2 text-white font-semibold hover:bg-accentdark transition ease-in-out duration-500 ">
           Start Chatting
         </button>
+        </Link>
       </div>
     </div>
   );
