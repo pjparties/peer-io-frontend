@@ -14,6 +14,7 @@ export const theme = {
       omeglebg: "#9EBCA6",
       user1: "#04027d",
       user2: "#f166ae",
+      warning: "#e63946",
     },
     backgroundImage: {
       "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
