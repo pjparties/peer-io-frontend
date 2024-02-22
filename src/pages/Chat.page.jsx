@@ -7,10 +7,30 @@ const Chat = () => {
 
   const handleSendMessage = () => {
     if (newMessage.trim() !== "") {
-      setMessages([...messages, { text: newMessage, sender: "user1" }]);
+      setMessages([...messages, { text: newMessage, sender: "You" }]);
       setNewMessage("");
     }
   };
+
+  function showMessageHistory() {
+    let prevSender = "";
+    return messages.map((message, index) => (
+      <div key={index} className="m-2">
+        {prevSender !== message.sender && (
+          <div
+            className={`mx-3 flex text-sm ${message.sender === "You" ? "justify-end" : ""}`}
+          >
+            {(prevSender = message.sender)}
+          </div>
+        )}
+        <div
+          className={`flex rounded-lg border-black px-4 py-2 font-semibold ${message.sender === "You" ? "justify-end bg-green-500" : "bg-gray-300"}`}
+        >
+          {message.text}
+        </div>
+      </div>
+    ));
+  }
 
   return (
     <div className="bg-omeglebg flex h-screen w-screen flex-col items-center justify-center px-8">
@@ -44,6 +64,7 @@ const Chat = () => {
           type="text"
           value={newMessage}
           className="mt-2 w-[70vw] h-16 rounded-lg border-2 border-gray-400 px-2 py-1"
+
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -54,7 +75,7 @@ const Chat = () => {
           placeholder="Type your message..."
         />
         <button
-          className="ml-2 rounded-xl border-gray-500 bg-accent px-4 py-4 font-bold text-white hover:scale-105 hover:bg-accentdark transition duration-300 ease-in-out"
+          className="ml-2 rounded-xl border-gray-500 bg-accent px-4 py-4 font-bold text-white hover:scale-105 hover:bg-accentdark transition duration-300 ease-in-out" 
           onClick={handleSendMessage}
         >
           Send
