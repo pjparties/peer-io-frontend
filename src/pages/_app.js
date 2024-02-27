@@ -1,10 +1,13 @@
 import "@/styles/globals.css";
 import { SocketProvider } from "@/contexts/socketProvider";
+import { SessionProvider } from "next-auth/react"
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <SocketProvider id="123">
-      <Component {...pageProps} />
-    </SocketProvider>
+    <SessionProvider>
+      <SocketProvider id="123">
+        <Component {...pageProps} />
+      </SocketProvider>
+    </SessionProvider>
   );
 }
