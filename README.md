@@ -1,38 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Peer-io
 
-## Getting Started
+## Project Overview:
+Peer-io is a decentralized real-time online chat application built for collaboration and enhancing productivity. Select from various activities such as pair programming, mock interviews, code reveiws and more. You will be matched with like-minded individuals to collaborate and learn from each other in real-time. You can share your code, ask questions, and get instant feedback from your peers. Peer-io is built with a focus on privacy and security, so you can collaborate with confidence.
+There are no servers involved in the process, so your data is never stored on any third-party servers. Peer-io uses WebRTC and Sockets to establish a direct peer-to-peer connection between users, ensuring that your data is secure and private. Peer-io is a free and open-source project, and we welcome contributions from the community to help improve the platform.
 
-First, run the development server:
+## Demo:
+![Login / Signup](public/LoginScreen.png)
+![Select Preferences](public/PrefScreen.png)
+![Chat !](public/ChatScreen.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Usage:
+Peer-io offers a simple and intuitive user interface for uploading and downloading files. Here's how to use it:
+1. Open the Peer-io application in your web browser.
+2. Sign up for an account or log in if you already have one.
+3. Select Preferences and click on start Chat.
+4. Once you are matched with a peer, you can start collaborating in real-time.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features:
+- Decentralized chat platform
+- Get matched with like-minded individuals
+- Real-time collaboration
+- Peer-to-peer communication
+- Secure and efficient chats
+- User-friendly interface
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Premium Version:
+Peer-io offers a premium version with additional features, including:
+- High priority matching
+- Unlimited skips and matches
+- Custom filters and preferences
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Version Info:
+Current version: 0.1.1
+Release date: February 27, 2024
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Installation:
+To install Peer-io, follow these steps:
+1. Clone the repository from GitHub: `git clone https://github.com/pjparties/peer-io-frontend.git`
+2. Navigate to the project directory: `cd peer-io-frontend`
+3. Install dependencies: `npm install`
+4. Start the application: `npm run dev`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Contributing:
+We welcome contributions from the community to improve Peer-io. To contribute, follow these steps:
+1. Fork the repository on GitHub.
+2. Clone your forked repository to your local machine.
+3. Create a new branch for your contribution: `git checkout -b feature/new-feature`
+4. Make your changes and commit them: `git commit -m "Add new feature"`
+5. Push your changes to your forked repository: `git push origin feature/new-feature`
+6. Create a pull request on the original repository.
+7. Our team will review your pull request and provide feedback.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License:
+This project is licensed under the [MIT License](LICENSE).
