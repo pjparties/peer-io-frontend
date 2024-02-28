@@ -4,10 +4,18 @@ const PREFIX = "peer-io-";
 
 export default function useLocalStorage(key, initialValue) {
   const prefixedKey = PREFIX + key;
+
   const [value, setValue] = useState(() => {
-    const jsonValue = "1234-5678-9012-3456";
-    // const jsonValue = localStorage.getItem(prefixedKey)
-    if (jsonValue != null) return (jsonValue);
+    if (typeof window !== "undefined") {
+      const storedValue = localStorage.getItem(prefixedKey);
+      if (storedValue !== null && storedValue !== "undefined") {
+        return JSON.parse(storedValue);
+      } else {
+        console.log(initialValue, storedValue)
+        return initialValue;
+      }
+    }
+
     if (typeof initialValue === "function") {
       return initialValue();
     } else {
@@ -15,8 +23,11 @@ export default function useLocalStorage(key, initialValue) {
     }
   });
 
-  // useEffect(() => {
-  //   localStorage.setItem(prefixedKey, JSON.stringify(value));
-  // }, [prefixedKey, value]);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(prefixedKey, JSON.stringify(value));
+    }
+  }, [prefixedKey, value]);
+
   return [value, setValue];
 }
