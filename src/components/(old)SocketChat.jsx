@@ -298,3 +298,8 @@ if (sendmessagebutton) {
 function viewmsgtoelement(element, message) {
   element.innerHTML += "\n" + message;
 }
+
+
+// const values = [viewmsgtoelement]
+
+// export default values;
