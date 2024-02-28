@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const useLocalStorage = (key, initialValue) => {
   const [state, setState] = useState(() => {
@@ -24,6 +24,15 @@ const useLocalStorage = (key, initialValue) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    () => {
+      // If the key changes, then update the state with the new value
+      window.localStorage.setItem(key, JSON.stringify(state));
+      console.log("useEffect changed value", state);
+    };
+  }, [key, initialValue]);
+
   return [state, setValue];
 };
 
