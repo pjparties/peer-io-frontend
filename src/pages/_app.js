@@ -10,9 +10,6 @@ import {v4 as uuidV4} from "uuid";
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   const initialValue = (uuidV4());
   const [id,setId] = useLocalStorage("peerio-id", initialValue);
-  useEffect(() => {
-    setId(initialValue);
-  }, []);
   console.log(id);
   return (
     <SessionProvider>
