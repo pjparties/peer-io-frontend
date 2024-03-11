@@ -1,24 +1,39 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import queryString from "query-string";
+// import queryString from "query-string";
 
-const SocketChat = ({ location }) => {
-  const [name, setName] = useState("");
-  const [room, setRoom] = useState("");
-  const ENDPOINT = process.env.SERVER_URL || "localhost:5000";
+const SocketChat = ({}) => {
+  const socket = io("http://localhost:8000");
+  socket.on("connect", () => {
+    console.log("Connected to server", socket.id);
+  });
 
+  const sendMessage = (message, roomId) => {
+    console.log("Message sent", message, roomId);
+    socket.emit("send-message", { roomId: roomId, msg: message });
+  };
+
+  const receiveMessge = (message) => {
+    socket.on("receive-message", (message) => {
+      console.log("Message received", message);
+    });
+  };  
   useEffect(() => {
-    const { room, name } = queryString.parse(location.search);
-    const socket = io(ENDPOINT);
-    setName(name);
-    setRoom(room);
-    socket.emit("create or join", { clientName: name, room: room });
-    console.log(location.search);
-    console.log(name, room);
-  }, [ENDPOINT, location.search]);
+    receiveMessge();
+  }, []);
+  
   return (
     <div>
       <h1>Socket Chat</h1>
+      {/* add a input and send button */}
+      <input type="text" id="messg" />
+      <button
+        onClick={() =>
+          sendMessage(document.getElementById("messg").value, "room1")
+        }
+      >
+        Send
+      </button>
     </div>
   );
 };
