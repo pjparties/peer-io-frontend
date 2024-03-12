@@ -3,6 +3,7 @@ import io from "socket.io-client";
 
 const SocketChat = () => {
   const [message, setMessage] = useState("");
+  const [sentMessages, setSentMessages] = useState([]);
   const [receivedMessages, setReceivedMessages] = useState([]);
   const [roomCode, setRoomCode] = useState("room1");
   const [socket, setSocket] = useState(null);
@@ -27,6 +28,8 @@ const SocketChat = () => {
       return;
     }
     socket.emit("sendMessage", roomCode, message);
+    setSentMessages((prevMessages) => [...prevMessages, message]);
+    setMessage("");
     console.log("Sent message: ", message);
   };
 
@@ -59,8 +62,11 @@ const SocketChat = () => {
       <button onClick={() => handleJoinRoom(roomCode)}>Join Room</button>
       <p>Received Messages:</p>
       <ul>
+        {sentMessages.map((message, index) => (
+          <li key={index}>You: {message}</li>
+        ))}
         {receivedMessages.map((message, index) => (
-          <li key={index}>{message}</li>
+          <li key={index}>Stranger: {message}</li>
         ))}
       </ul>
     </div>
