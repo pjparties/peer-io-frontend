@@ -1,15 +1,87 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import io from "socket.io-client";
 
 const Chat = () => {
+  // states for the chat
+  const [chatMessage, setChatMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
+  const [isInRoom, setIsInRoom] = useState(false);
+  const [roomCode, setRoomCode] = useState("room1");
+  const [socket, setSocket] = useState(null);
 
+  // Connect to the socket server
+  useEffect(() => {
+    const newSocket = io("http://localhost:8000"); // Replace with your backend URL
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
+
+  // Join a room
+  const handleJoinRoom = (roomCode) => {
+    if (!socket) {
+      console.log("You are not connected to a room. Please join a room.");
+      return;
+    }
+    if (!roomCode) {
+      console.log("Please enter a room code to join a room.");
+      return;
+    }
+    socket.emit("joinRoom", roomCode);
+    console.log("Joined room: ", roomCode);
+    setIsInRoom(true);
+  };
+
+  // Send a message
   const handleSendMessage = () => {
-    if (newMessage.trim() !== "") {
-      setMessages([...messages, { text: newMessage, sender: "You" }]);
-      setNewMessage("");
+    if (!chatMessage) {
+      console.log("Please enter a message to send.");
+      return;
+    }
+    if (!isInRoom) {
+      console.log("Please join a room first.");
+      return;
+    }
+    socket.emit("sendMessage", roomCode, chatMessage);
+    const obj = { sender: "You", message: chatMessage };
+    setMessages((prevMessages) => [...prevMessages, obj]);
+    setChatMessage("");
+    console.log("Sent message: ", chatMessage);
+  };
+
+  // Receive a message
+  const handleReceiveMessage = () => {
+    socket.on("receiveMessage", (message) => {
+      console.log("idhar aaya: ", message);
+      const obj = { sender: "Stranger", message: message };
+      setMessages((prevMessages) => [...prevMessages, obj]);
+    });
+  };
+
+  // log messages
+  // useEffect(() => {
+  //   console.log(messages);
+  // }, [messages]);
+
+  // Listen for messages
+  useEffect(() => {
+    if (socket) {
+      handleReceiveMessage();
+    } else {
+      console.log("You are not connected to a room. Please join a room.");
+    }
+  }, [socket]);
+
+  // Leave the room
+  const handleLeaveRoom = () => {
+    if (socket) {
+      socket.emit("leaveRoom", roomCode);
+      console.log(`User left room ${roomCode}`);
+      setIsInRoom(false);
     }
   };
 
@@ -28,26 +100,31 @@ const Chat = () => {
                 >
                   {message.sender === "You" ? "You: " : "Stranger: "}
                 </span>
-                <text className="text-here">{message.text}</text>
+                <text className="text-here">{message.message}</text>
               </div>
             ))}
           </div>
         </div>
       </div>
       <div className="bottom-row-wrapper ml-0 flex w-full justify-center items-center">
-        <div className="m-3">
+        <div className="" onClick={handleLeaveRoom}>
           <Link href="/home">
-            <button className="ml-2 rounded-xl border-gray-500 bg-warning px-20 py-4 font-bold text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-[#c1121f]">
-              End
+            <button className="ml-2 rounded-xl border-gray-500 bg-warning px-6 py-3 font-bold text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-[#c1121f]">
+              Leave Room
             </button>
           </Link>
+        </div>
+        <div className="" onClick={() => {handleJoinRoom(roomCode)} }>
+            <button className="ml-2 rounded-xl border-gray-500 bg-accentdark px-6 py-3 font-bold text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-accentdark">
+              Join Room
+            </button>
         </div>
         <div className="input-area pl-4">
           <input
             type="text"
-            value={newMessage}
-            className="h-16 w-[70vw] rounded-lg border-2 border-gray-400 px-2 py-1"
-            onChange={(e) => setNewMessage(e.target.value)}
+            value={chatMessage}
+            className="h-16 w-[60vw] rounded-lg border-2 border-gray-400 px-2 py-1"
+            onChange={(e) => setChatMessage(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
@@ -57,7 +134,7 @@ const Chat = () => {
             placeholder="Type your message..."
           />
           <button
-            className="ml-2 rounded-xl border-gray-500 bg-accent px-4 py-4 font-bold text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-accentdark"
+            className="ml-2 rounded-xl border-gray-500 bg-accent px-4 py-4 font-bold text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-accent"
             onClick={handleSendMessage}
           >
             Send
