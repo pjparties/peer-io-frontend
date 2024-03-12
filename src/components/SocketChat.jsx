@@ -1,39 +1,68 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
-// import queryString from "query-string";
 
-const SocketChat = ({}) => {
-  const socket = io("http://localhost:8000");
-  socket.on("connect", () => {
-    console.log("Connected to server", socket.id);
-  });
+const SocketChat = () => {
+  const [message, setMessage] = useState("");
+  const [receivedMessages, setReceivedMessages] = useState([]);
+  const [roomCode, setRoomCode] = useState("room1");
+  const [socket, setSocket] = useState(null);
 
-  const sendMessage = (message, roomId) => {
-    console.log("Message sent", message, roomId);
-    socket.emit("send-message", { roomId: roomId, msg: message });
+  useEffect(() => {
+    const newSocket = io("http://localhost:8000"); // Replace with your backend URL
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
+
+  const handleJoinRoom = (roomCode) => {
+    socket.emit("joinRoom", roomCode);
+    console.log("Joined room: ", roomCode);
   };
 
-  const receiveMessge = (message) => {
-    socket.on("receive-message", (message) => {
-      console.log("Message received", message);
+  const handleSendMessage = () => {
+    if (!message) {
+      console.log("Please enter a message to send.");
+      return;
+    }
+    socket.emit("sendMessage", roomCode, message);
+    console.log("Sent message: ", message);
+  };
+
+  const handleReceiveMessage = () => {
+    socket.on("receiveMessage", (message) => {
+      console.log("idhar aaya: ", message);
+      setReceivedMessages((prevMessages) => [...prevMessages, message]);
     });
-  };  
+  };
+
   useEffect(() => {
-    receiveMessge();
-  }, []);
-  
+    console.log(receivedMessages);
+  }, [receivedMessages]);
+
+  useEffect(() => {
+    if (socket) {
+      handleReceiveMessage();
+    } else {
+      console.log("You are not connected to a room. Please join a room.");
+    }
+  }, [socket]);
   return (
     <div>
-      <h1>Socket Chat</h1>
-      {/* add a input and send button */}
-      <input type="text" id="messg" />
-      <button
-        onClick={() =>
-          sendMessage(document.getElementById("messg").value, "room1")
-        }
-      >
-        Send
-      </button>
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      <button onClick={handleSendMessage}>Send Message</button>
+      <button onClick={() => handleJoinRoom(roomCode)}>Join Room</button>
+      <p>Received Messages:</p>
+      <ul>
+        {receivedMessages.map((message, index) => (
+          <li key={index}>{message}</li>
+        ))}
+      </ul>
     </div>
   );
 };
