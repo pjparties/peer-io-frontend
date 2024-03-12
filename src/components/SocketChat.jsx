@@ -71,7 +71,7 @@ const SocketChat = () => {
       <div className="w-80 rounded bg-white p-4 shadow-md">
         <h1 className="mb-4 text-2xl font-bold">Socket Chat</h1>
         <p className="mb-2 font-bold">
-          Currently in Room ? {isInRoom ? "True" : "False"}
+          Currently in Room ?:  {isInRoom ? "True" : "False"}
         </p>
         <p className="mb-2 font-bold">Room Code: {isInRoom? roomCode: ""}</p>
         <input
