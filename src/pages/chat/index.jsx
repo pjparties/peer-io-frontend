@@ -5,6 +5,7 @@ import io from "socket.io-client";
 
 const Chat = () => {
   // states for the chat
+  const [errorMessages, setErrorMessages] = useState([]);
   const [chatMessage, setChatMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [isInRoom, setIsInRoom] = useState(false);
@@ -39,10 +40,14 @@ const Chat = () => {
   // Send a message
   const handleSendMessage = () => {
     if (!chatMessage) {
+      const obj = { message: "Please enter a message to send." };
+      setErrorMessages((prevErrors) => [...prevErrors, obj]);
       console.log("Please enter a message to send.");
       return;
     }
     if (!isInRoom) {
+      const obj = { message: "Please join a room first." };
+      setErrorMessages((prevErrors) => [...prevErrors, obj]);
       console.log("Please join a room first.");
       return;
     }
@@ -93,6 +98,17 @@ const Chat = () => {
         </p>
         <div className="all-messages-here ml-1">
           <div className="message transition duration-300 ease-in">
+            {/* error messages conditionally rendered */}
+            {messages.length == 0 &&
+              errorMessages.map((message, index) => (
+                <div key={index}>
+                  <span className="font-bold text-warning">Error: </span>
+                  <text className="font-bold text-warning">
+                    {message.message}
+                  </text>
+                </div>
+              ))}
+            {/* real messages typed here */}
             {messages.map((message, index) => (
               <div key={index}>
                 <span
@@ -106,7 +122,7 @@ const Chat = () => {
           </div>
         </div>
       </div>
-      <div className="bottom-row-wrapper ml-0 flex w-full justify-center items-center">
+      <div className="bottom-row-wrapper ml-0 flex w-full items-center justify-center">
         <div className="" onClick={handleLeaveRoom}>
           <Link href="/home">
             <button className="ml-2 rounded-xl border-gray-500 bg-warning px-6 py-3 font-bold text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-[#c1121f]">
@@ -114,10 +130,15 @@ const Chat = () => {
             </button>
           </Link>
         </div>
-        <div className="" onClick={() => {handleJoinRoom(roomCode)} }>
-            <button className="ml-2 rounded-xl border-gray-500 bg-accentdark px-6 py-3 font-bold text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-accentdark">
-              Join Room
-            </button>
+        <div
+          className=""
+          onClick={() => {
+            handleJoinRoom(roomCode);
+          }}
+        >
+          <button className="ml-2 rounded-xl border-gray-500 bg-accentdark px-6 py-3 font-bold text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-accentdark">
+            Join Room
+          </button>
         </div>
         <div className="input-area pl-4">
           <input
