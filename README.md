@@ -5,7 +5,7 @@ Peer-io is a decentralized real-time online chat application built for collabora
 There are no servers involved in the process, so your data is never stored on any third-party servers. Peer-io uses WebSockets to establish a direct peer-to-peer connection between users, ensuring that your data is secure and private. Peer-io is a free and open-source project, and we welcome contributions from the community to help improve the platform.
 
 ##  Backend Repo 
-[Peer-io Backend](www.github.com/pjparties/peer-io-backend)
+[Peer-io Backend](https://www.github.com/pjparties/peer-io-backend)
 
 ## Demo:
 ![Login / Signup](public/LoginScreen.png)
