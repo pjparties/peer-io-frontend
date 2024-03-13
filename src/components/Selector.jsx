@@ -3,9 +3,9 @@ import Link from "next/link";
 
 export const Selector = () => {
   const [selection, setSelection] = useState([
-    { type: "leetcode", select: false, id: 1 },
-    { type: "productivity", select: false, id: 2 },
-    { type: "project", select: false, id: 3 },
+    { type: "Pair Programming", select: false, id: 1 },
+    { type: "Mock Interview", select: false, id: 2 },
+    { type: "Code Debug", select: false, id: 3 },
   ]);
   const sendData = () => {
     const selected = selection.filter((item) => item.select);
