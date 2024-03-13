@@ -6,11 +6,12 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import {v4 as uuidV4} from "uuid";
 
 
-
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   const initialValue = (uuidV4());
   const [id,setId] = useLocalStorage("peerio-id", initialValue);
-  console.log(id);
+  useEffect(() => {
+    setId(initialValue);
+  }, []);
   return (
     <SessionProvider>
       <SocketProvider id={id}>
