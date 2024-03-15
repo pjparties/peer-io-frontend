@@ -1,28 +1,37 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import io from "socket.io-client";
+import useAuth from "@/components/useAuth";
 
 const Chat = () => {
-  // states for the chat
+  const { session, status } = useAuth();
+  const [socket, setSocket] = useState(null);
   const [errorMessages, setErrorMessages] = useState([]);
   const [chatMessage, setChatMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [isInRoom, setIsInRoom] = useState(false);
   const [roomCode, setRoomCode] = useState("room1");
-  const [socket, setSocket] = useState(null);
 
-  // Connect to the socket server
   useEffect(() => {
-    const newSocket = io("http://localhost:8000"); // Replace with your backend URL
-    setSocket(newSocket);
+    if (status === 'authenticated') {
+      const newSocket = io("http://localhost:8000"); 
+      setSocket(newSocket);
 
-    return () => {
-      newSocket.disconnect();
-    };
-  }, []);
+      return () => {
+        newSocket.disconnect();
+      };
+    }
+  }, [status]);
 
-  // Join a room
+  useEffect(() => {
+    if (socket) {
+      socket.on("receiveMessage", (message) => {
+        const obj = { sender: "Stranger", message: message };
+        setMessages((prevMessages) => [...prevMessages, obj]);
+      });
+    }
+  }, [socket]);
+
   const handleJoinRoom = (roomCode) => {
     if (!socket) {
       console.log("You are not connected to a room. Please join a room.");
@@ -37,7 +46,6 @@ const Chat = () => {
     setIsInRoom(true);
   };
 
-  // Send a message
   const handleSendMessage = () => {
     if (!chatMessage) {
       const obj = { message: "Please enter a message to send." };
@@ -58,30 +66,6 @@ const Chat = () => {
     console.log("Sent message: ", chatMessage);
   };
 
-  // Receive a message
-  const handleReceiveMessage = () => {
-    socket.on("receiveMessage", (message) => {
-      console.log("idhar aaya: ", message);
-      const obj = { sender: "Stranger", message: message };
-      setMessages((prevMessages) => [...prevMessages, obj]);
-    });
-  };
-
-  // log messages
-  // useEffect(() => {
-  //   console.log(messages);
-  // }, [messages]);
-
-  // Listen for messages
-  useEffect(() => {
-    if (socket) {
-      handleReceiveMessage();
-    } else {
-      console.log("You are not connected to a room. Please join a room.");
-    }
-  }, [socket]);
-
-  // Leave the room
   const handleLeaveRoom = () => {
     if (socket) {
       socket.emit("leaveRoom", roomCode);
@@ -89,6 +73,14 @@ const Chat = () => {
       setIsInRoom(false);
     }
   };
+
+  if (status !== 'authenticated') {
+    return (
+      <div>
+        <h1>You are not logged in... Redirecting</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-omeglebg px-8">
